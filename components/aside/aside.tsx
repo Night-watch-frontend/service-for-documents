@@ -18,11 +18,13 @@ export async function Aside() {
   const info = await data.json();
   const items = info._embedded.items;
 
-  console.log(items);
   return (
     <aside className={styles.aside}>
       <h3 className={styles.title}>{"Категории документов"}</h3>
       <ul>
+        <li className={styles.item}>
+          <NavAside navLinks={[{ title: "Все документы", href: "/" }]} />
+        </li>
         {items.map((item: { name: string }) => {
           return (
             <li key={item.name} className={styles.item}>

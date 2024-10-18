@@ -1,6 +1,7 @@
 .aside {
   margin-right: 2px;
-  width: 30%;
+  flex-shrink: 0;
+  width: 25%;
   padding: 20px;
   color: var(--foreground);
   background-color: var(--background);

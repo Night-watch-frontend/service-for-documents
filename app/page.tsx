@@ -1,3 +1,4 @@
+import { Divider } from "@/components/divider";
 import styles from "./page.module.css";
 
 export default async function Home() {
@@ -19,7 +20,8 @@ export default async function Home() {
   //  console.log(listDocs.items);
   return (
     <div className={styles.container}>
-      <h2>{""}</h2>
+      <h2>{"Все документы"}</h2>
+      <Divider />
       <ul>
         {listDocs.items.map((item: { name: string }) => {
           return <li key={item.name}>{item.name}</li>;
