@@ -1,5 +1,5 @@
+import { NavAside } from "../navigation-aside";
 import styles from "./aside.module.css";
-import Link from "next/link";
 
 export async function Aside() {
   const data = await fetch(
@@ -17,14 +17,18 @@ export async function Aside() {
 
   const info = await data.json();
   const items = info._embedded.items;
+
+  console.log(items);
   return (
     <aside className={styles.aside}>
       <h3 className={styles.title}>{"Категории документов"}</h3>
       <ul>
         {items.map((item: { name: string }) => {
           return (
-            <li key={item.name}>
-              <Link href={`/${item.name}`}>{item.name}</Link>
+            <li key={item.name} className={styles.item}>
+              <NavAside
+                navLinks={[{ title: item.name, href: `/${item.name}` }]}
+              />
             </li>
           );
         })}

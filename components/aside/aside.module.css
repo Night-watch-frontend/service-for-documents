@@ -10,4 +10,8 @@
     text-decoration: solid underline;
     text-underline-offset: 5px;
   }
+
+  .item {
+    margin-bottom: 10px;
+  }
 }
