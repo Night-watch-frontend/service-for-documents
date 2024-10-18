@@ -1,0 +1,13 @@
+.aside {
+  margin-right: 2px;
+  width: 30%;
+  padding: 20px;
+  color: var(--foreground);
+  background-color: var(--background);
+
+  .title {
+    margin-bottom: 10px;
+    text-decoration: solid underline;
+    text-underline-offset: 5px;
+  }
+}
