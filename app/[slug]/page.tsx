@@ -1,10 +1,11 @@
 import { Divider } from "@/components/divider";
 import styles from "./page.module.css";
+import Link from "next/link";
 export default async function Page({ params }: { params: { slug: string } }) {
   const decodeTitle = decodeURIComponent(params.slug);
 
   const listDocsData = await fetch(
-    `https://cloud-api.yandex.net/v1/disk/resources?path=CaseLabDocuments/${decodeTitle}`,
+    `https://cloud-api.yandex.net/v1/disk/resources?path=CaseLabDocuments/${params.slug}`,
     {
       method: "GET",
       headers: {
@@ -27,7 +28,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Divider />
       <ul>
         {items.map((item: { name: string }) => {
-          return <li key={item.name}>{item.name}</li>;
+          return (
+            <li key={item.name}>
+              <Link href={`/${params.slug}/${item.name}`}>{item.name}</Link>
+            </li>
+          );
         })}
       </ul>
     </div>

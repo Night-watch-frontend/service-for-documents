@@ -1,5 +1,6 @@
 import { Divider } from "@/components/divider";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default async function Home() {
   const listDocsData = await fetch(
@@ -23,8 +24,14 @@ export default async function Home() {
       <h2>{"Все документы"}</h2>
       <Divider />
       <ul>
-        {listDocs.items.map((item: { name: string }) => {
-          return <li key={item.name}>{item.name}</li>;
+        {listDocs.items.map((item: { name: string; path: string }) => {
+          const path = item.path.split("/");
+          const href = path.slice(2).join("/");
+          return (
+            <li key={item.name}>
+              <Link href={`/${href}`}>{item.name}</Link>
+            </li>
+          );
         })}
       </ul>
     </div>
