@@ -1,21 +1,7 @@
+import { Link, DataDocuments, Category } from "./types-api";
+
 const baseUrl = process.env.API_URL;
 const token = process.env.TOKEN;
-
-interface Document {
-  name: string;
-  path: string;
-}
-interface Documents {
-  items: Document[];
-}
-
-interface Category {
-  _embedded: Documents;
-}
-
-interface Link {
-  href: string;
-}
 
 export const services = {
   async getDocument(path: string): Promise<Link> {
@@ -34,7 +20,7 @@ export const services = {
     return data;
   },
 
-  async getAllDocuments(): Promise<Documents> {
+  async getAllDocuments(): Promise<DataDocuments> {
     const response: Response = await fetch(
       `${baseUrl}/files?fields=items.name%2Citems.path`,
       {
@@ -46,7 +32,7 @@ export const services = {
         cache: "no-store",
       }
     );
-    const data: Documents = await response.json();
+    const data: DataDocuments = await response.json();
     return data;
   },
 
