@@ -1,24 +1,11 @@
 import { Divider } from "@/components/divider";
 import styles from "./page.module.css";
 import Link from "next/link";
+import { services } from "@/api/services";
 
 export default async function Home() {
-  const listDocsData = await fetch(
-    "https://cloud-api.yandex.net/v1/disk/resources/files",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "OAuth y0_AgAAAAB5e9agAADLWwAAAAEU_o9WAADCv9ruQHZFhpbE_a3qUQGRDXBryw",
-      },
-      cache: "no-store",
-    }
-  );
+  const listDocs = await services.getAllDocuments();
 
-  // console.log(info._embedded.items);
-  const listDocs = await listDocsData.json();
-  //  console.log(listDocs.items);
   return (
     <div className={styles.container}>
       <h2>{"Все документы"}</h2>

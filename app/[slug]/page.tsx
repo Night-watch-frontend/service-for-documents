@@ -1,23 +1,11 @@
 import { Divider } from "@/components/divider";
 import styles from "./page.module.css";
 import Link from "next/link";
+import { services } from "@/api/services";
 export default async function Page({ params }: { params: { slug: string } }) {
   const decodeTitle = decodeURIComponent(params.slug);
 
-  const listDocsData = await fetch(
-    `https://cloud-api.yandex.net/v1/disk/resources?path=CaseLabDocuments/${params.slug}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "OAuth y0_AgAAAAB5e9agAADLWwAAAAEU_o9WAADCv9ruQHZFhpbE_a3qUQGRDXBryw",
-      },
-      cache: "no-store",
-    }
-  );
-
-  const listDocs = await listDocsData.json();
+  const listDocs = await services.getCategory(params.slug);
   const items = listDocs._embedded.items;
 
   //console.log(items);
