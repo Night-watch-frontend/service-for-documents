@@ -1,5 +1,5 @@
-const baseUrl = "https://cloud-api.yandex.net/v1/disk/resources";
-const token = "y0_AgAAAAB5e9agAADLWwAAAAEU_o9WAADCv9ruQHZFhpbE_a3qUQGRDXBryw";
+const baseUrl = process.env.API_URL;
+const token = process.env.TOKEN;
 
 interface Document {
   name: string;
