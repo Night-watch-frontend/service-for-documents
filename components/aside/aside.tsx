@@ -1,22 +1,16 @@
+"use client";
+import { observer } from "mobx-react-lite";
 import { NavAside } from "../navigation-aside";
 import styles from "./aside.module.css";
+import { useEffect } from "react";
+import { storeDocuments } from "@/store/store";
 
-export async function Aside() {
-  const data = await fetch(
-    "https://cloud-api.yandex.net/v1/disk/resources?path=CaseLabDocuments",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "OAuth y0_AgAAAAB5e9agAADLWwAAAAEU_o9WAADCv9ruQHZFhpbE_a3qUQGRDXBryw",
-      },
-      cache: "no-store",
-    }
-  );
+const Aside = observer(() => {
+  useEffect(() => {
+    storeDocuments.fetchCategories();
+  }, []);
 
-  const info = await data.json();
-  const items = info._embedded.items;
+  const items = storeDocuments.state.listCategories;
 
   return (
     <aside className={styles.aside}>
@@ -25,16 +19,16 @@ export async function Aside() {
         <li className={styles.item}>
           <NavAside navLinks={[{ title: "Все документы", href: "/" }]} />
         </li>
-        {items.map((item: { name: string }) => {
-          return (
-            <li key={item.name} className={styles.item}>
-              <NavAside
-                navLinks={[{ title: item.name, href: `/${item.name}` }]}
-              />
-            </li>
-          );
-        })}
+        {items.map((item) => (
+          <li key={item.name} className={styles.item}>
+            <NavAside
+              navLinks={[{ title: item.name, href: `/${item.name}` }]}
+            />
+          </li>
+        ))}
       </ul>
     </aside>
   );
-}
+});
+
+export { Aside };

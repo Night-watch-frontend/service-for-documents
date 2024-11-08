@@ -1,26 +1,44 @@
+"use client";
 import { Divider } from "@/components/divider";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { services } from "@/api/services";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { storeDocuments } from "@/store/store";
+import { usePathname } from "next/navigation";
 
-export default async function Home() {
-  const listDocs = await services.getAllDocuments();
+const Home = observer(() => {
+  const path = usePathname();
+
+  useEffect(() => {
+    if (path === "/") {
+      storeDocuments.fetchAllDocuments();
+    }
+  }, [path]);
+
+  const listDocs = storeDocuments.state.documents;
 
   return (
     <div className={styles.container}>
       <h2>{"Все документы"}</h2>
       <Divider />
       <ul>
-        {listDocs.items.map((item: { name: string; path: string }) => {
-          const path = item.path.split("/");
-          const href = path.slice(2).join("/");
+        {listDocs.map((item: { name: string; path: string }) => {
           return (
             <li key={item.name}>
-              <Link href={`/${href}`}>{item.name}</Link>
+              <Link
+                href={`/${
+                  item.path ? item.path.split("/").slice(2).join("/") : ""
+                }`}
+              >
+                {item.name}
+              </Link>
             </li>
           );
         })}
       </ul>
     </div>
   );
-}
+});
+
+export default Home;

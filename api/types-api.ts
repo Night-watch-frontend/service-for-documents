@@ -13,3 +13,11 @@ export type Category = {
 export type Link = {
   href: string;
 };
+
+export type CategoryItem = {
+  _embedded: {
+    items: {
+      name: string;
+    }[];
+  };
+};

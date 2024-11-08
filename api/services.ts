@@ -1,7 +1,13 @@
-import { Link, DataDocuments, Category } from "./types-api";
+import {
+  Link,
+  DataDocuments,
+  Category,
+  CategoryItem,
+  DataDocument,
+} from "./types-api";
 
-const baseUrl = process.env.API_URL;
-const token = process.env.TOKEN;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+const token = process.env.NEXT_PUBLIC_TOKEN;
 
 export const services = {
   async getDocument(path: string): Promise<Link> {
@@ -20,7 +26,7 @@ export const services = {
     return data;
   },
 
-  async getAllDocuments(): Promise<DataDocuments> {
+  async getAllDocuments(): Promise<DataDocument[]> {
     const response: Response = await fetch(
       `${baseUrl}/files?fields=items.name%2Citems.path`,
       {
@@ -33,7 +39,7 @@ export const services = {
       }
     );
     const data: DataDocuments = await response.json();
-    return data;
+    return data.items;
   },
 
   async getCategory(category: string): Promise<Category> {
@@ -52,11 +58,11 @@ export const services = {
     return data;
   },
 
-  async moveFile(pathFrom: string, pathTo: string): Promise<void> {
-    const res = await fetch(
-      `${baseUrl}/move?from=CaseLabDocuments/${pathFrom}&path=CaseLabDocuments/${pathTo}`,
+  async getListCategories(): Promise<{ name: string }[]> {
+    const response = await fetch(
+      `${baseUrl}?path=CaseLabDocuments&fields=_embedded.items.name`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `OAuth ${token}`,
@@ -64,7 +70,22 @@ export const services = {
         cache: "no-store",
       }
     );
-    const data = await res.json();
+    const data: CategoryItem = await response.json();
+    return data._embedded.items;
+  },
+
+  async moveFile(pathFrom: string, pathTo: string): Promise<void> {
+    const res = await fetch(
+      `${baseUrl}/move?from=CaseLabDocuments/${pathFrom}&path=CaseLabDocuments/${pathTo}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `OAuth ${token}`,
+        },
+        cache: "no-store",
+      }
+    );
+    const data: void = await res.json();
     console.log(data);
   },
 
