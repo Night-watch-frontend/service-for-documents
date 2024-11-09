@@ -20,7 +20,9 @@ export function NavAside({ navLinks }: NavAsideProps) {
   return (
     <>
       {navLinks.map((link) => {
-        const isActive = decodePath === link.href;
+        const isActive =
+          decodePath === link.href ||
+          decodePath === `${link.href}/${decodePath.split("/").pop()}`;
 
         return (
           <Link

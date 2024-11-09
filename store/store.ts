@@ -11,17 +11,20 @@ export const storeDocuments = makeAutoObservable({
   },
 
   async fetchDocuments(slug: string) {
-    const res = await services.getCategory(slug);
-    runInAction(() => {
-      if (res._embedded.items.length === 0) {
+    try {
+      const res = await services.getCategory(slug);
+      runInAction(() => {
+        if (res._embedded.items.length === 0) {
+          this.state.title = slug;
+          this.state.documents = [];
+          return;
+        }
+        this.state.documents = res._embedded.items;
         this.state.title = slug;
-        this.state.documents = [];
-        return;
-      }
-      this.state.documents = res._embedded.items;
-      this.state.title = slug;
-    });
-    return res;
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   async fetchAllDocuments() {
@@ -48,6 +51,19 @@ export const storeDocuments = makeAutoObservable({
     const res = await services.getDocument(path);
     runInAction(() => {
       if (res) this.state.path = res.href;
+    });
+    return res;
+  },
+
+  async delete(path: string) {
+    const res = await services.deleteFile(path);
+    runInAction(() => {
+      if (res === 202 || res === 204) {
+        this.state.documents = this.state.documents.filter(
+          (item) => item.name !== path.split("/").pop()
+        );
+        this.state.path = "";
+      }
     });
     return res;
   },

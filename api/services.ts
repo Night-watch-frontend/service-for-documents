@@ -19,7 +19,6 @@ export const services = {
           "Content-Type": "application/json",
           Authorization: `OAuth ${token}`,
         },
-        cache: "no-store",
       }
     );
     const data: Link = await response.json();
@@ -35,7 +34,6 @@ export const services = {
           "Content-Type": "application/json",
           Authorization: `OAuth ${token}`,
         },
-        cache: "no-store",
       }
     );
     const data: DataDocuments = await response.json();
@@ -51,7 +49,6 @@ export const services = {
           "Content-Type": "application/json",
           Authorization: `OAuth ${token}`,
         },
-        cache: "no-store",
       }
     );
     const data: Category = await response.json();
@@ -67,7 +64,6 @@ export const services = {
           "Content-Type": "application/json",
           Authorization: `OAuth ${token}`,
         },
-        cache: "no-store",
       }
     );
     const data: CategoryItem = await response.json();
@@ -82,22 +78,21 @@ export const services = {
         headers: {
           Authorization: `OAuth ${token}`,
         },
-        cache: "no-store",
       }
     );
     const data: void = await res.json();
     console.log(data);
   },
 
-  async deleteFile(path: string): Promise<void> {
-    const res = await fetch(`${baseUrl}/delete?path=CaseLabDocuments/${path}`, {
+  async deleteFile(path: string): Promise<number> {
+    const res = await fetch(`${baseUrl}?path=CaseLabDocuments/${path}`, {
       method: "DELETE",
       headers: {
         Authorization: `OAuth ${token}`,
       },
-      cache: "no-store",
     });
-    const data = await res.json();
-    console.log(data);
+    const data: Response = await res;
+    console.log(data.status);
+    return data.status;
   },
 };
