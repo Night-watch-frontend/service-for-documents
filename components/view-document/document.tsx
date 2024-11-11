@@ -35,8 +35,8 @@ export const Document: React.FC<IDocumentProps> = observer(({ href }) => {
           <Image
             alt="Picture of the author"
             src={path}
-            width={600}
-            height={600}
+            width={550}
+            height={550}
             priority
             onLoad={() => setLoading(false)}
           />

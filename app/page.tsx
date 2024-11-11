@@ -1,11 +1,11 @@
 "use client";
 import { Divider } from "@/components/divider";
-import styles from "./page.module.css";
 import Link from "next/link";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { storeDocuments } from "@/store/store";
 import { usePathname } from "next/navigation";
+import { Box, Typography } from "@mui/material";
 
 const Home = observer(() => {
   const path = usePathname();
@@ -19,8 +19,10 @@ const Home = observer(() => {
   const listDocs = storeDocuments.state.documents;
 
   return (
-    <div className={styles.container}>
-      <h2>{"Все документы"}</h2>
+    <Box sx={{ width: "100%", bgcolor: "#FFF", p: "10px" }}>
+      <Typography component="h2" variant="h6" sx={{ fontWeight: "bold" }}>
+        Все документы
+      </Typography>
       <Divider />
       <ul>
         {listDocs.map((item: { name: string; path: string }) => {
@@ -37,7 +39,7 @@ const Home = observer(() => {
           );
         })}
       </ul>
-    </div>
+    </Box>
   );
 });
 

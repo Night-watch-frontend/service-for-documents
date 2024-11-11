@@ -1,10 +1,14 @@
-import styles from "./header.module.css";
+import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 export function Header() {
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <h1>{"Приложение для работы с документами"}</h1>
-      </div>
-    </header>
+    <AppBar position="static">
+      <Container maxWidth="lg">
+        <Toolbar>
+          <Typography component="h1" variant="h5">
+            Приложение для работы с документами
+          </Typography>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }

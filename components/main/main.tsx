@@ -1,5 +1,5 @@
+import { Box, Container } from "@mui/material";
 import { Aside } from "../aside";
-import styles from "./main.module.css";
 
 export function Main({
   children,
@@ -7,11 +7,11 @@ export function Main({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
-      <div className={styles.container}>
+    <Box component={"main"}>
+      <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "row" }}>
         <Aside />
         {children}
-      </div>
-    </main>
+      </Container>
+    </Box>
   );
 }

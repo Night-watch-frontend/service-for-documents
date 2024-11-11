@@ -1,10 +1,10 @@
 "use client";
 import { Divider } from "@/components/divider";
-import styles from "./page.module.css";
 import Link from "next/link";
 import { storeDocuments } from "@/store/store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+import { Box, Typography } from "@mui/material";
 const Page = observer(({ params }: { params: { slug: string } }) => {
   const decodeTitle = decodeURIComponent(params.slug);
 
@@ -16,8 +16,10 @@ const Page = observer(({ params }: { params: { slug: string } }) => {
   const title = storeDocuments.state.title;
 
   return (
-    <div className={styles.container}>
-      <h2>{title}</h2>
+    <Box sx={{ width: "100%", bgcolor: "#FFF", p: "10px" }}>
+      <Typography component="h2" variant="h6" sx={{ fontWeight: "bold" }}>
+        {title}
+      </Typography>
       <Divider />
       <ul>
         {items.length > 0 &&
@@ -28,7 +30,7 @@ const Page = observer(({ params }: { params: { slug: string } }) => {
           ))}
         {items.length === 0 && <li>Нет документов</li>}
       </ul>
-    </div>
+    </Box>
   );
 });
 

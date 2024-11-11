@@ -4,6 +4,8 @@ import { NavAside } from "../navigation-aside";
 import styles from "./aside.module.css";
 import { useEffect } from "react";
 import { storeDocuments } from "@/store/store";
+import { List, ListItem, Typography, Box } from "@mui/material";
+import { Divider } from "../divider";
 
 const Aside = observer(() => {
   useEffect(() => {
@@ -13,21 +15,31 @@ const Aside = observer(() => {
   const items = storeDocuments.state.listCategories;
 
   return (
-    <aside className={styles.aside}>
-      <h3 className={styles.title}>{"Категории документов"}</h3>
-      <ul>
-        <li className={styles.item}>
+    <Box
+      component="aside"
+      sx={{ width: "30%", p: "10px", backgroundColor: "#FFF", mr: "2px" }}
+    >
+      <Typography
+        variant="subtitle1"
+        component="h3"
+        sx={{ color: "#000", fontWeight: "bold" }}
+      >
+        Категории документов
+      </Typography>
+      <Divider />
+      <List>
+        <ListItem>
           <NavAside navLinks={[{ title: "Все документы", href: "/" }]} />
-        </li>
+        </ListItem>
         {items.map((item) => (
-          <li key={item.name} className={styles.item}>
+          <ListItem key={item.name} className={styles.item}>
             <NavAside
               navLinks={[{ title: item.name, href: `/${item.name}` }]}
             />
-          </li>
+          </ListItem>
         ))}
-      </ul>
-    </aside>
+      </List>
+    </Box>
   );
 });
 
