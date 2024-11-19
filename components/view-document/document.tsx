@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./document.module.css";
+import SelectMove from "../select/select";
 
 interface IDocumentProps {
   href: string;
@@ -29,18 +30,23 @@ export const Document: React.FC<IDocumentProps> = observer(({ href }) => {
 
   return (
     <div className={styles.container}>
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div className={styles.loading}>
+          <h4>Loading...</h4>
+        </div>
+      )}
       {path && (
         <>
           <Image
             alt="Picture of the author"
             src={path}
-            width={550}
-            height={550}
+            width={650}
+            height={650}
             priority
             onLoad={() => setLoading(false)}
           />
           <button onClick={deleteHandle}>Delete</button>
+          <SelectMove values={storeDocuments.state.listCategories} />
         </>
       )}
     </div>

@@ -92,7 +92,6 @@ export const services = {
       },
     });
     const data: Response = await res;
-    console.log(data.status);
     return data.status;
   },
 };
