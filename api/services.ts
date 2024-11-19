@@ -70,9 +70,9 @@ export const services = {
     return data._embedded.items;
   },
 
-  async moveFile(pathFrom: string, pathTo: string): Promise<void> {
+  async moveFile(pathFrom: string, pathTo: string): Promise<number> {
     const res = await fetch(
-      `${baseUrl}/move?from=CaseLabDocuments/${pathFrom}&path=CaseLabDocuments/${pathTo}`,
+      `${baseUrl}/move?from=CaseLabDocuments${pathFrom}&path=CaseLabDocuments${pathTo}`,
       {
         method: "POST",
         headers: {
@@ -80,8 +80,8 @@ export const services = {
         },
       }
     );
-    const data: void = await res.json();
-    console.log(data);
+    const data: Response = await res;
+    return data.status;
   },
 
   async deleteFile(path: string): Promise<number> {

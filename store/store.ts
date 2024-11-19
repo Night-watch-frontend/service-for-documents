@@ -67,4 +67,16 @@ export const storeDocuments = makeAutoObservable({
     });
     return res;
   },
+
+  async move(from: string, to: string) {
+    const res = await services.moveFile(from, to);
+    runInAction(() => {
+      if (res === 201) {
+        this.state.documents = this.state.documents.filter(
+          (item) => item.name !== from.split("/").pop()
+        );
+        this.state.path = "";
+      }
+    });
+  },
 });

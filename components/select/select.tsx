@@ -1,4 +1,7 @@
+"use client";
+import { storeDocuments } from "@/store/store";
 import { Button, Menu, MenuItem } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ISelectMoveProps {
@@ -10,11 +13,16 @@ interface ISelectMoveProps {
 export default function SelectMove({ values }: ISelectMoveProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const path = usePathname();
+  const router = useRouter();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (to: string) => {
+    const nameDocument = path.split("/").pop();
     setAnchorEl(null);
+    storeDocuments.move(path, `/${to}/${nameDocument}`);
+    router.back();
   };
   return (
     <div>
@@ -43,7 +51,7 @@ export default function SelectMove({ values }: ISelectMoveProps) {
         }}
       >
         {values.map((value) => (
-          <MenuItem key={value.name} onClick={handleClose}>
+          <MenuItem key={value.name} onClick={() => handleClose(value.name)}>
             {value.name}
           </MenuItem>
         ))}
