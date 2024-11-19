@@ -1,10 +1,10 @@
 "use client";
 import { Divider } from "@/components/divider";
-import Link from "next/link";
 import { storeDocuments } from "@/store/store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
+import { TableDocuments } from "@/components/table";
 const Page = observer(({ params }: { params: { slug: string } }) => {
   const decodeTitle = decodeURIComponent(params.slug);
 
@@ -21,15 +21,11 @@ const Page = observer(({ params }: { params: { slug: string } }) => {
         {title}
       </Typography>
       <Divider />
-      <ul>
-        {items.length > 0 &&
-          items.map((item) => (
-            <li key={item.name}>
-              <Link href={`/${params.slug}/${item.name}`}>{item.name}</Link>
-            </li>
-          ))}
-        {items.length === 0 && <li>Нет документов</li>}
-      </ul>
+      {items.length ? (
+        <TableDocuments rows={{ rows: items, href: params.slug }} />
+      ) : (
+        <p>Нет документов</p>
+      )}
     </Box>
   );
 });

@@ -7,8 +7,8 @@ export function Main({
   children: React.ReactNode;
 }>) {
   return (
-    <Box component={"main"}>
-      <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "row" }}>
+    <Box component={"main"} flexGrow={1}>
+      <Container maxWidth="lg" sx={{ display: "flex", height: "100%" }}>
         <Aside />
         {children}
       </Container>

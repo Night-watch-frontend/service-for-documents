@@ -1,11 +1,11 @@
 "use client";
 import { Divider } from "@/components/divider";
-import Link from "next/link";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { storeDocuments } from "@/store/store";
 import { usePathname } from "next/navigation";
 import { Box, Typography } from "@mui/material";
+import { TableDocuments } from "@/components/table";
 
 const Home = observer(() => {
   const path = usePathname();
@@ -24,21 +24,7 @@ const Home = observer(() => {
         Все документы
       </Typography>
       <Divider />
-      <ul>
-        {listDocs.map((item: { name: string; path: string }) => {
-          return (
-            <li key={item.name}>
-              <Link
-                href={`/${
-                  item.path ? item.path.split("/").slice(2).join("/") : ""
-                }`}
-              >
-                {item.name}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      <TableDocuments rows={{ rows: listDocs, href: "" }} />
     </Box>
   );
 });

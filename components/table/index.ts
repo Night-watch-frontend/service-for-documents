@@ -1,0 +1,1 @@
+export { TableDocuments } from "./table";
