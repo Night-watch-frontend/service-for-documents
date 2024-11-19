@@ -27,7 +27,7 @@ export const services = {
 
   async getAllDocuments(): Promise<DataDocument[]> {
     const response: Response = await fetch(
-      `${baseUrl}/files?fields=items.name%2Citems.path`,
+      `${baseUrl}/files?fields=items.name%2Citems.path%2Citems.preview`,
       {
         method: "GET",
         headers: {
@@ -42,7 +42,7 @@ export const services = {
 
   async getCategory(category: string): Promise<Category> {
     const response: Response = await fetch(
-      `${baseUrl}?path=CaseLabDocuments/${category}&fields=_embedded.items.name`,
+      `${baseUrl}?path=CaseLabDocuments/${category}&fields=_embedded.items.name%2C_embedded.items.preview`,
       {
         method: "GET",
         headers: {

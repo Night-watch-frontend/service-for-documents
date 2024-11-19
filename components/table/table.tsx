@@ -9,6 +9,7 @@ import {
   Paper,
 } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
 
 interface IRowProps {
   rows: DataDocument[];
@@ -17,13 +18,13 @@ interface IRowProps {
 
 export const TableDocuments = ({ rows }: { rows: IRowProps }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ maxHeight: 650 }}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>№</TableCell>
             <TableCell>Название</TableCell>
-            <TableCell>Действия</TableCell>
+            <TableCell>Превью</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -42,7 +43,15 @@ export const TableDocuments = ({ rows }: { rows: IRowProps }) => {
                     {row.name}
                   </Link>
                 </TableCell>
-                <TableCell>3</TableCell>
+                <TableCell>
+                  <Image
+                    src={row.preview}
+                    width={30}
+                    height={40}
+                    alt={row.name}
+                    unoptimized={true}
+                  ></Image>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>

@@ -1,6 +1,7 @@
 export type DataDocument = {
   name: string;
   path: string;
+  preview: string;
 };
 export type DataDocuments = {
   items: DataDocument[];
