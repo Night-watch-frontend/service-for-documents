@@ -1,4 +1,5 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
+import { useState } from "react";
 
 interface ISelectMoveProps {
   values: {
@@ -7,27 +8,46 @@ interface ISelectMoveProps {
 }
 
 export default function SelectMove({ values }: ISelectMoveProps) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Move</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={""}
-          label="Move"
-        >
-          {values.map((item) => (
-            <MenuItem
-              key={item.name}
-              value={item.name}
-              onClick={() => console.log(item.name)}
-            >
-              {item.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <div>
+      <Button
+        id="demo-positioned-button"
+        aria-controls={open ? "demo-positioned-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        переместить документ
+      </Button>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        {values.map((value) => (
+          <MenuItem key={value.name} onClick={handleClose}>
+            {value.name}
+          </MenuItem>
+        ))}
+      </Menu>
+    </div>
   );
 }
