@@ -1,0 +1,18 @@
+.aside {
+  margin-right: 2px;
+  flex-shrink: 0;
+  width: 25%;
+  padding: 20px;
+  color: var(--foreground);
+  background-color: var(--background);
+
+  .title {
+    margin-bottom: 10px;
+    text-decoration: solid underline;
+    text-underline-offset: 5px;
+  }
+
+  .item {
+    margin-bottom: 10px;
+  }
+}
